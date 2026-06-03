@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+.openclaw/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and reports
+*.log
+allure-results/
+reports/
+screenshots/
+
+# Local secrets
+.env
+*.env
