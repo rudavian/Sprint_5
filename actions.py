@@ -57,15 +57,16 @@ def wait_for_login_success(driver):
     return wait_visible(driver, MainPageLocators.PLACE_ORDER_BUTTON)
 
 
-def wait_for_active_tab(driver, tab_name, timeout=DEFAULT_WAIT_TIMEOUT):
-    def active_tab_matches(browser):
-        active_tab = browser.find_element(*ConstructorPageLocators.ACTIVE_TAB)
-        return active_tab if active_tab.text == tab_name else False
+def wait_for_tab_active(driver, tab_locator, timeout=DEFAULT_WAIT_TIMEOUT):
+    def tab_is_active(browser):
+        tab = browser.find_element(*tab_locator)
+        class_attribute = tab.get_attribute("class") or ""
+        return tab if ConstructorPageLocators.ACTIVE_TAB_CLASS in class_attribute else False
 
-    return WebDriverWait(driver, timeout).until(active_tab_matches)
+    return WebDriverWait(driver, timeout).until(tab_is_active)
 
 
-def register_user(driver, name=VALID_NAME, attempts=5):
+def register_user(driver, name=VALID_NAME, attempts=30):
     for _ in range(attempts):
         user_data = generate_user_data(name=name)
         open_registration_page(driver)
