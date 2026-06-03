@@ -9,6 +9,39 @@ UI-автотесты для сервиса Stellar Burgers.
 - pytest
 - Google Chrome
 
+## Environment requirements
+
+- Python 3.12 or another installed Python 3 version
+- Google Chrome
+- Mozilla Firefox
+
+Основной браузер для запуска автотестов на ревью: Google Chrome.
+
+## Install dependencies on Windows
+
+Откройте PowerShell в корне проекта:
+
+```powershell
+cd D:\Code_Project\Sprint_5
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Если Python 3.12 недоступен, используйте установленный Python 3:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+## Run tests
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -v
+```
+
 ## What is covered
 
 - регистрация пользователя;
@@ -43,32 +76,8 @@ Sprint_5/
 └── .gitignore
 ```
 
-## Install dependencies
-
-```bash
-python3 -m venv .venv
-. .venv/bin/activate
-pip install -r requirements.txt
-```
-
-## Run tests
-
-```bash
-pytest -v
-```
-
 ## Project notes
 
 - временные учетные данные создаются во время запуска и не хранятся в репозитории;
 - все фикстуры находятся в `conftest.py`;
 - все Selenium-локаторы вынесены в `locators.py`.
-
-## Runtime note
-
-В текущем OpenClaw runtime тесты запускались через:
-
-```bash
-LD_LIBRARY_PATH=/tmp/selenium_deps/extract/usr/lib/x86_64-linux-gnu .venv/bin/python -m pytest -v
-```
-
-Для ревью в обычном локальном окружении это не должно быть основным способом запуска, если Chrome и системные зависимости установлены корректно.
