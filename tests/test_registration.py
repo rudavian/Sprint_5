@@ -1,6 +1,4 @@
-from selenium.common.exceptions import TimeoutException
-
-from data import DEFAULT_WAIT_TIMEOUT, INVALID_PASSWORD_ERROR_TEXT, INVALID_SHORT_PASSWORD, VALID_NAME
+from data import INVALID_PASSWORD_ERROR_TEXT, INVALID_SHORT_PASSWORD, VALID_NAME
 from helpers import generate_email, generate_password
 from locators import LoginPageLocators, RegisterPageLocators
 from actions import open_registration_page, wait_clickable, wait_visible
@@ -8,25 +6,19 @@ from actions import open_registration_page, wait_clickable, wait_visible
 
 class TestRegistration:
     def test_successful_registration(self, driver):
-        for _ in range(30):
-            email = generate_email()
-            password = generate_password()
+        email = generate_email()
+        password = generate_password()
 
-            open_registration_page(driver)
-            wait_visible(driver, RegisterPageLocators.NAME_INPUT).send_keys(VALID_NAME)
-            wait_visible(driver, RegisterPageLocators.EMAIL_INPUT).send_keys(email)
-            wait_visible(driver, RegisterPageLocators.PASSWORD_INPUT).send_keys(password)
-            wait_clickable(driver, RegisterPageLocators.REGISTER_BUTTON).click()
+        open_registration_page(driver)
+        wait_visible(driver, RegisterPageLocators.NAME_INPUT).send_keys(VALID_NAME)
+        wait_visible(driver, RegisterPageLocators.EMAIL_INPUT).send_keys(email)
+        wait_visible(driver, RegisterPageLocators.PASSWORD_INPUT).send_keys(password)
+        wait_clickable(driver, RegisterPageLocators.REGISTER_BUTTON).click()
 
-            try:
-                login_title = wait_visible(driver, LoginPageLocators.PAGE_TITLE, timeout=DEFAULT_WAIT_TIMEOUT)
-                assert "/login" in driver.current_url
-                assert login_title.is_displayed()
-                return
-            except TimeoutException:
-                continue
+        login_title = wait_visible(driver, LoginPageLocators.PAGE_TITLE)
 
-        raise AssertionError("Не удалось зарегистрировать пользователя с уникальным email за несколько попыток.")
+        assert "/login" in driver.current_url
+        assert login_title.is_displayed()
 
     def test_registration_with_short_password_shows_error(self, driver):
         open_registration_page(driver)
